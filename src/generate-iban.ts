@@ -1,4 +1,4 @@
-import { showToast, Toast, Clipboard } from "@raycast/api";
+import { showToast, Toast, Clipboard, closeMainWindow, showHUD } from "@raycast/api";
 
 function generateRandomDigits(length: number): string {
   return Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
@@ -32,11 +32,8 @@ export default async function Command() {
   try {
     const iban = generateBelgianIBAN();
     await Clipboard.copy(iban);
-    await showToast({
-      style: Toast.Style.Success,
-      title: "IBAN copied to clipboard",
-      message: iban,
-    });
+    await closeMainWindow();
+    await showHUD("✅ Copied IBAN");
   } catch (error) {
     await showToast({
       style: Toast.Style.Failure,
